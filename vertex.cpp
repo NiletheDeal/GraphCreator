@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Vertex()::Vertex() {
+Vertex::Vertex() {
   //Constructor
   name = '\0';
   int x = 0;
@@ -13,7 +13,7 @@ Vertex()::Vertex() {
   }
 }
 
-Vertex()::~Vertex() {
+Vertex::~Vertex() {
   //Destructor
   name = '\0';
   index = 0;
