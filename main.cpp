@@ -1,7 +1,7 @@
 //Author: Nathan Zou
 //Date: 6/12/2022
 //Graph Creator, similar to previously completed Graph Creator in Java (2021), but no GUI this time
-//Completed with help from:
+//Completed with help from: Chris Zou and Stefan Ene
 
 #include <iostream>
 #include <cstring>
@@ -49,6 +49,7 @@ int main() {
     }
     else if (strcmp(command, "Print") == 0) { //Print
       PRINT(list, IC);
+      cout << endl;
     }
     else if (strcmp(command, "Fpath") == 0) { //Shortest path algorithm, aka Dijkstra's algorithm
 
@@ -115,7 +116,7 @@ void removeVertex(Vertex **list, int IC) { //Remove Vertex, deletes a user input
     Vertex* current = list[r];
     for (int currEdge = i; currEdge < IC; currEdge++) {
       if (currEdge == IC - 1) {
-	current->setEdge(currEdge, 0);
+	      current->setEdge(currEdge, 0);
       }
       else {
 	//Move all edges above removed index down by 1 index
@@ -130,7 +131,7 @@ void removeVertex(Vertex **list, int IC) { //Remove Vertex, deletes a user input
   //move all elements that follow down by 1 index
   while (i < IC) {
     if (i == IC - 1) {
-      list[i] == NULL;
+      list[i] = NULL;
       break;
     }
     list[i] = list[i + 1];
@@ -142,49 +143,55 @@ void removeVertex(Vertex **list, int IC) { //Remove Vertex, deletes a user input
 
 
 void PRINT(Vertex **list, int IC) { //Print, prints out adjacency matrix
-  char display[21][21]; //[row][col]
-  for (int r = 0; r < 21; r++) { //Row
-    for (int c = 0; c < 21; c++) { //Column
+  char display[21][21];  //[row][col]
+  //initialize empty matrix
+  for (int r = 0; r < 21; r++) {
+    for (int c = 0; c < 21; c++) {
       display[r][c] = ' ';
     }
   }
   int edgeDisplay[20][20];
-  int count;
+  int count = 0;
+  //construct adjacency matrix visual
+  //first row and column
   while (count < IC) {
-    display[0][count + 1] = (list[count])->getName();
-    display[count + 1][0] = (list[count])->getName();
+    display[0][count+1] = (list[count])->getName();
+    display[count+1][0] = (list[count])->getName();
     count++;
   }
+  //create edge display list
   for (int r = 0; r < IC; r++) {
     Vertex* v = list[r];
     for (int c = 0; c < IC; c++) {
       Vertex* vr = list[c];
       if (v->getEdge(vr->getIndex()) != 0) {
-	edgeDisplay[r][c] = 'T';
-      }
+	      edgeDisplay[r][c] = 'T';
+      } 
       else {
-	edgeDisplay[r][c] = 'F';
+	      edgeDisplay[r][c] = 'F';
       }
     }
   }
+  //place edge matrix in display array
   for (int r = 0; r < IC; r++) {
     for (int c = 0; c < IC; c++) {
-      display[r + 1][c + 1] = edgeDisplay[r][c];
+      display[r+1][c+1] = edgeDisplay[r][c];
     }
   }
+  //display adjacency matrix
   for (int r = 0; r < 21; r++) {
     for (int c = 0; c < 21; c++) {
       if (display[r][c] == 'T' && c != 0 && r != 0) {
-	cout << BLUE << display[r][c] << RESET << '\t';
-      }
+	      cout << BLUE << display[r][c] << RESET << '\t';
+      }  
       else if (display[r][c] == 'F' && c != 0 && r != 0) {
-	cout << RED << display[r][c] << RESET << '\t';
-      }
+	      cout << RED << display[r][c] << RESET << '\t';
+      } 
       else {
-	cout << display[r][c] << '\t';
+      	cout << display[r][c] << '\t';
       }
     }
     cout << endl;
-    if (display[r + 1][0] == ' ') break;
+    if (display[r+1][0] == ' ') break;
   }
 }
