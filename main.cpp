@@ -17,19 +17,19 @@ using namespace std;
 Vertex* findVertex(Vertex** list, char in, int IC);
 void addVertex(Vertex **list, int IC);
 void removeVertex(Vertex **list, int IC);
-void addEdge();
-void removeEdge();
+void addEdge(Vertex **list, int IC);
+void removeEdge(Vertex **list, int IC);
 void PRINT(Vertex **list, int IC);
 void fastPath();
 
 int main() {
   Vertex **list = new Vertex*[20];
   int IC = 0; //index counter
-  cout << "Graph Creator; C++ Edition (No GUI)" << endl << endl;
+  cout << "Graph Creator; C++ Edition (No GUI)" << endl;
   bool running = true;
   char command[15];
   while (running == true) {
-    cout << "Options: AddVer, DelVer, AddEdge, DelEdge, Print, Fpath, Quit" << endl;
+    cout << endl << "Options: AddVer, DelVer, AddEdge, DelEdge, Print, Fpath, Quit" << endl;
     cin.get(command, 15);
     cin.clear();
     cin.ignore(10000, '\n');
@@ -42,10 +42,10 @@ int main() {
       IC--;
     }
     else if (strcmp(command, "AddEdge") == 0) { //Add Edge
-
+      addEdge(list, IC);
     }
     else if (strcmp(command, "DelEdge") == 0) { //Delete Edge
-
+      removeEdge(list, IC);
     }
     else if (strcmp(command, "Print") == 0) { //Print
       PRINT(list, IC);
@@ -194,4 +194,63 @@ void PRINT(Vertex **list, int IC) { //Print, prints out adjacency matrix
     cout << endl;
     if (display[r+1][0] == ' ') break;
   }
+}
+
+void addEdge(Vertex **list, int IC) { //Add Edge, add an edge between two given vertexs
+  if(list[0] == NULL || list[1] == NULL) {
+    //Need at least two vectors
+    cout << endl << "Have at least two vectors first." << endl;
+    return;
+  }
+  char input1, input2;
+  cout << endl << "Which two vertexs is this edge being added to?" << endl;
+  cout << "Vertex 1 >> ";
+  cin >> input1;
+  cin.clear();
+  cin.ignore(10000, '\n');
+  cout << "Vertex 2 >> ";
+  cin >> input2;
+  cin.clear();
+  cin.ignore(10000, '\n');
+  Vertex* v1 = findVertex(list, input1, IC);
+  Vertex* v2 = findVertex(list, input2, IC);
+  if (v1 == NULL || v2 == NULL) {
+    cout << endl << "Vertexs couldn't be located. Try again." << endl;
+    return;
+  }
+  //Assign edge value
+  cout << "Edge value >> ";
+  int val;
+  cin >> val;
+  cin.clear();
+  cin.ignore(10000, '\n');
+  v1->setEdge(v2->getIndex(), val);
+  v2->setEdge(v1->getIndex(), val);
+}
+
+void removeEdge(Vertex **list, int IC) { //Remove Edge, delete an edge between two given vertexs
+  if(list[0] == NULL || list[1] == NULL) {
+    //Need at least two vectors
+    cout << endl << "Have at least two vertices first." << endl;
+    return;
+  }
+  char input1, input2;
+  cout << "What vectors are connected by this edge?" << endl;
+  cout << "Vertex 1 >> ";
+  cin >> input1;
+  cin.clear();
+  cin.ignore(10000, '\n');
+  cout << "Vertex 2 >> ";
+  cin >> input2;
+  cin.clear();
+  cin.ignore(10000, '\n');
+  Vertex* v1 = findVertex(list, input1, IC);
+  Vertex* v2 = findVertex(list, input2, IC);
+  if (v1 == NULL || v2 == NULL) {
+    cout << endl << "Vertexs couldn't be located. Try again." << endl;
+    return;
+  }
+  v1->setEdge(v2->getIndex(), 0);
+  v2->setEdge(v1->getIndex(), 0);
+  cout << "Edge deleted." << endl;
 }
