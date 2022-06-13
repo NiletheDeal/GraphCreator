@@ -20,7 +20,7 @@ void removeVertex(Vertex **list, int IC);
 void addEdge(Vertex **list, int IC);
 void removeEdge(Vertex **list, int IC);
 void PRINT(Vertex **list, int IC);
-void fastPath();
+void fastPath(Vertex** list, int IC);
 
 int main() {
   Vertex **list = new Vertex*[20];
@@ -52,7 +52,8 @@ int main() {
       cout << endl;
     }
     else if (strcmp(command, "Fpath") == 0) { //Shortest path algorithm, aka Dijkstra's algorithm
-
+      cout << "Find the fastest path between two vertexs using Dijkstra's algorithm." << endl;
+      fastPath(list, IC);
     }
     else if (strcmp(command, "Quit") == 0) { //Quit
       cout << endl << "Quitting Graph Creator" << endl;
@@ -141,7 +142,6 @@ void removeVertex(Vertex **list, int IC) { //Remove Vertex, deletes a user input
   cout << endl << "Vertex deleted." << endl;
 }
 
-
 void PRINT(Vertex **list, int IC) { //Print, prints out adjacency matrix
   char display[21][21];  //[row][col]
   //initialize empty matrix
@@ -198,8 +198,8 @@ void PRINT(Vertex **list, int IC) { //Print, prints out adjacency matrix
 
 void addEdge(Vertex **list, int IC) { //Add Edge, add an edge between two given vertexs
   if(list[0] == NULL || list[1] == NULL) {
-    //Need at least two vectors
-    cout << endl << "Have at least two vectors first." << endl;
+    //Need at least two verticies
+    cout << endl << "Have at least two verticies first." << endl;
     return;
   }
   char input1, input2;
@@ -230,7 +230,7 @@ void addEdge(Vertex **list, int IC) { //Add Edge, add an edge between two given 
 
 void removeEdge(Vertex **list, int IC) { //Remove Edge, delete an edge between two given vertexs
   if(list[0] == NULL || list[1] == NULL) {
-    //Need at least two vectors
+    //Need at least two verticies
     cout << endl << "Have at least two vertices first." << endl;
     return;
   }
@@ -253,4 +253,31 @@ void removeEdge(Vertex **list, int IC) { //Remove Edge, delete an edge between t
   v1->setEdge(v2->getIndex(), 0);
   v2->setEdge(v1->getIndex(), 0);
   cout << "Edge deleted." << endl;
+}
+
+void fastPath(Vertex** list, int IC) {
+  if (list[0] == NULL || list[1] == NULL) {
+    //Need at least two verticies
+    cout << endl << "Have at least two verticies first." << endl;
+    return;
+  }
+  char input1, input2;
+  cout << "Starting Vertex >> ";
+  cin >> input1;
+  cin.clear();
+  cin.ignore(10000, '\n');
+  cout << "Ending Vertex >> ";
+  cin >> input2;
+  cin.clear();
+  cin.ignore(10000, '\n');
+  Vertex* start = findVertex(list, input1, IC);
+  Vertex* end = findVertex(list, input2, IC);
+  int S = start->getIndex();
+  int E = end->getIndex();
+  if (start == NULL || end == NULL) {
+    cout << endl << "Vertexs couldn't be located. Try again." << endl;
+    return;
+  }
+  int shortPath = S + E;
+  cout << "Shortest Path: " << shortPath << endl;
 }
