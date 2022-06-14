@@ -255,7 +255,7 @@ void removeEdge(Vertex **list, int IC) { //Remove Edge, delete an edge between t
   cout << "Edge deleted." << endl;
 }
 
-void fastPath(Vertex** list, int IC) {
+void fastPath(Vertex** list, int IC) { //Fastest/Shortest path, Dijkstra's algorithm
   if (list[0] == NULL || list[1] == NULL) {
     //Need at least two verticies
     cout << endl << "Have at least two verticies first." << endl;
@@ -272,12 +272,8 @@ void fastPath(Vertex** list, int IC) {
   cin.ignore(10000, '\n');
   Vertex* start = findVertex(list, input1, IC);
   Vertex* end = findVertex(list, input2, IC);
-  int S = start->getIndex();
-  int E = end->getIndex();
   if (start == NULL || end == NULL) {
     cout << endl << "Vertexs couldn't be located. Try again." << endl;
     return;
   }
-  int shortPath = S + E;
-  cout << "Shortest Path: " << shortPath << endl;
 }
