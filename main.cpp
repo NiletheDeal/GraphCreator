@@ -2,6 +2,12 @@
 //Date: 6/12/2022
 //Graph Creator, similar to previously completed Graph Creator in Java (2021), but no GUI this time
 //Completed with help from: Chris Zou and Stefan Ene
+/*Other Resources:
+      Dijkstra's Algorithm: 
+      https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
+      https://www.youtube.com/watch?v=_lHSawdgXpI                
+      https://iq.opengenus.org/dijkstras-algorithm-finding-shortest-path-between-all-nodes/
+*/
 
 #include <iostream>
 #include <cstring>
@@ -275,5 +281,63 @@ void fastPath(Vertex** list, int IC) { //Fastest/Shortest path, Dijkstra's algor
   if (start == NULL || end == NULL) {
     cout << endl << "Vertexs couldn't be located. Try again." << endl;
     return;
+  }
+	else {
+    int max = IC;
+    int n = IC;
+    int INFINITY = 999; //Assuming 999 as Infinity value
+    int startnode = start->getIndex();
+    int destnode = end->getIndex();
+    int cost[max][max],distance[max],pred[max];
+    int visited[max],count,mindistance,nextnode,i,j,y,z;
+    for(i = 0; i < n; i++){
+        for(j = 0; j < n; j++){ 
+            if(list[i]->getEdge(j) == 0){
+                cost[i][j] = INFINITY;
+            }
+            else{
+                cost[i][j] = list[i]->getEdge(j);
+            }
+        }
+     }   
+
+    // Main functionality (Algorithm)
+   for(i = 0; i < n; i++) {
+      distance[i] = cost[startnode][i];
+      pred[i] = startnode;
+      visited[i] = 0;
+   }
+   distance[startnode] = 0;
+   visited[startnode] = 1;
+   count = 1;
+   while(count < n-1) {
+      mindistance = INFINITY;
+      for(i = 0; i < n; i++)
+         if(distance[i] < mindistance && !visited[i]) {
+         mindistance = distance[i];
+         nextnode = i;
+      }
+      visited[nextnode] = 1;
+      for(i = 0; i < n; i++)
+         if(!visited[i])
+      if(mindistance+cost[nextnode][i] < distance[i]) {
+         distance[i] = mindistance+cost[nextnode][i];
+         pred[i] = nextnode;
+      }
+      count++;
+   }
+    // Printing the shortest path along with the cost
+   for(i = 0; i < n; i++) {
+   if(i == destnode) {
+      cout << "\nDistance/Cost: " << distance[i];
+      cout << "\nPath: " << list[i]->getName();
+      j = i;
+      do {
+         j = pred[j];
+         cout << "<-" << list[j]->getName();
+      }
+      while(j != startnode);
+    }
+   }
   }
 }
