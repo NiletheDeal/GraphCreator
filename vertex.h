@@ -10,14 +10,11 @@ class Vertex {
   //Getters
   char getName();
   int getIndex();
-  int getEdge(int);
   //Setters
   void setName(char);
   void setIndex(int);
-  void setEdge(int, int);
  private:
   char name;
   int index;
-  int edges[20];
 };
 #endif

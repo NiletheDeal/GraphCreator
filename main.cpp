@@ -1,14 +1,3 @@
-//Author: Nathan Zou
-//Date: 6/12/2022
-//Graph Creator, similar to previously completed Graph Creator in Java (2021), but no GUI this time
-//Completed with help from: Chris Zou and Stefan Ene
-/*Other Resources:
-      Dijkstra's Algorithm: 
-      https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
-      https://www.youtube.com/watch?v=_lHSawdgXpI                
-      https://iq.opengenus.org/dijkstras-algorithm-finding-shortest-path-between-all-nodes/
-*/
-
 #include <iostream>
 #include <cstring>
 #include "vertex.h"
@@ -30,6 +19,7 @@ void fastPath(Vertex** list, int IC);
 
 int main() {
   Vertex **list = new Vertex*[20];
+  int edgeList[20][20];
   int IC = 0; //index counter
   cout << "Graph Creator; C++ Edition (No GUI)" << endl;
   bool running = true;
